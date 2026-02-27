@@ -9,6 +9,18 @@
 - Initial project structure setup - ([e40daa3](https://github.com/Vaishnav-Sabari-Girish/CGame/commit/e40daa36df802f3dc80e7dc17d5ccb6b82386d98)) by @BITS-Rohit
 
 
+### :wrench: Miscellaneous
+
+- **(cl update)** Update CHANGELOG - ([51c6e91](https://github.com/Vaishnav-Sabari-Girish/CGame/commit/51c6e912eebb84785a1a9fc0e54e91bcfcb5748d)) by @Vaishnav-Sabari-Girish
+
+
+### :twisted_rightwards_arrows: Pull Requests
+
+- Merge pull request #1 from Vaishnav-Sabari-Girish/main
+
+Update README.md and add initial project setup - ([17aa86b](https://github.com/Vaishnav-Sabari-Girish/CGame/commit/17aa86b00b6c62228d28970062a2c98da9790c33)) by @BITS-Rohit
+
+
 ### :page_facing_up: Documentation
 
 - **(add env setup)** Add env setup in README - ([2d4943f](https://github.com/Vaishnav-Sabari-Girish/CGame/commit/2d4943fedb7c75beade927149de320e4d90fe6f2)) by @Vaishnav-Sabari-Girish
