@@ -4,7 +4,17 @@ from platformdirs import PlatformDirs
 
 
 class DirectoryManager:
-    """Manages the directory structure for CGAME and user profiles."""
+    """Manages the directory structure for CGAME and user profiles.
+
+    On-disk layout:
+        root_dir/
+        └── profiles/
+            └── <profile_name>/
+                ├── saves/
+                │   └── gamestate.json
+                └── backup/
+                    └── gamestate.json
+    """
 
     def __init__(self, app_name: str = "CGAME") -> None:
         self.dirs = PlatformDirs(
@@ -24,27 +34,55 @@ class DirectoryManager:
         self.log_dir.mkdir(parents=True, exist_ok=True)
         self.profiles_dir.mkdir(parents=True, exist_ok=True)
 
+    # ------------------------------------------------------------------ #
+    # Profile-level paths                                                  #
+    # ------------------------------------------------------------------ #
+
     def get_profile_path(self, profile_name: str) -> Path:
-        """Expose the root path for a given profile."""
+        """Root folder for a given profile."""
         return self.profiles_dir / profile_name
 
     def get_backup_path(self, profile_name: str) -> Path:
-        """Expose the backup folder path inside the given profile's directory."""
+        """backup/ folder inside the given profile's directory."""
         return self.get_profile_path(profile_name) / "backup"
 
     def get_save_path(self, profile_name: str) -> Path:
-        """Expose the saves folder path inside the given profile's directory."""
+        """saves/ folder inside the given profile's directory."""
         return self.get_profile_path(profile_name) / "saves"
+
+    # ------------------------------------------------------------------ #
+    # GameState file paths                                                 #
+    # ------------------------------------------------------------------ #
+
+    def get_game_state_path(self, profile_name: str) -> Path:
+        """Path to the active game state JSON file for a profile.
+
+        Location: saves/gamestate.json
+        This is the file that gets loaded when a user activates a profile.
+        """
+        return self.get_save_path(profile_name) / "gamestate.json"
+
+    def get_backup_game_state_path(self, profile_name: str) -> Path:
+        """Path to the backup copy of the game state JSON for a profile.
+
+        Location: backup/gamestate.json
+        Written on exit_profile() before the session ends.
+        """
+        return self.get_backup_path(profile_name) / "gamestate.json"
+
+    # ------------------------------------------------------------------ #
+    # Directory bootstrap                                                  #
+    # ------------------------------------------------------------------ #
 
     def setup_profile_directories(self, profile_name: str) -> None:
         """Ensure all required directories exist for a given profile.
 
-        Structure:
+        Structure created:
             root_dir/
             └── profiles/
                 └── <profile_name>/
-                    ├── saves/
-                    └── backup/
+                    ├── saves/       ← gamestate.json lives here
+                    └── backup/      ← backup copy of gamestate.json lives here
         """
         self.setup_base_directories()
 

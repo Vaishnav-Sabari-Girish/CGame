@@ -35,22 +35,34 @@ class ProfileManager:
 
 
     def create_profile(self, profile: ProfileConfig) -> None:
-        """Create the directory structure for a new profile on disk."""
-        pass
+        """Create the full directory structure for a new profile on disk.
+
+        Creates:
+            profiles/<name>/
+            profiles/<name>/saves/       ← gamestate.json will live here
+            profiles/<name>/backup/      ← backup copy of gamestate.json
+        """
+        self.dir_obj.setup_profile_directories(profile.name)
 
     def activate_profile(self, profile: ProfileConfig) -> None:
-        """
-        Activates the profile available to the saved disk.
-        Expect : This should also be able to activate the current profile to start the game.
-        Game will load all the stats from it .
+        """Activate a profile and load its game state.
+
+        Expected flow:
+            1. Verify profile exists on disk via profile_exists().
+            2. Read game_state_path (saves/gamestate.json) into a GameState object.
+            3. Mark profile as active (profile.is_active = True).
+            4. Hand the GameState off to the game engine to begin the session.
         """
         pass
 
-    def exit_profile(self):
-        """
-        Exits from the current Profile.
-        Expect : This should confirm & initiate the exit , also saving the game with the last_initiated game config
-        to latest_save_point & create backup on last saved config
+    def exit_profile(self, profile: ProfileConfig) -> None:
+        """Save the current game state and exit the active profile cleanly.
+
+        Expected flow:
+            1. Serialize current GameState → write to game_state_path (saves/gamestate.json).
+            2. Copy saves/gamestate.json → backup/gamestate.json (via create_backup).
+            3. Update profile.lastModifiedAt timestamp.
+            4. Mark profile as inactive (profile.is_active = False).
         """
         pass
 
