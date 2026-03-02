@@ -11,35 +11,53 @@ class ProfileManager:
     Disk is the single source of truth — no in-memory list is maintained.
     """
 
-    def __init__(self, dir: DirectoryManager) -> None:
-        self.dir = dir
+    def __init__(self, dir_obj: DirectoryManager) -> None:
+        self.dir_obj = dir_obj
 
-    def get_profiles(self) -> List[str]:
+    # ------------------------------------------------------------------ #
+    # Profile operations                                                 #
+    # ------------------------------------------------------------------ #
+
+    def get_profiles_name(self) -> List[str]:
         """Return profile names that actually exist as folders on disk."""
-        profiles_dir = self.dir.profiles_dir
+        profiles_dir = self.dir_obj.profiles_dir
         if not profiles_dir.exists():
             return []
         return [p.name for p in profiles_dir.iterdir() if p.is_dir()]
 
     def profile_exists(self, profile: ProfileConfig) -> bool:
         """Check whether a profile's directory exists on disk."""
-        return self.dir.get_profile_path(profile.name).is_dir()
+        return self.dir_obj.get_profile_path(profile.name).is_dir()
 
     def profile_size(self) -> int:
         """Number of profiles on disk."""
-        return len(self.get_profiles())
+        return len(self.get_profiles_name())
 
-    # ------------------------------------------------------------------ #
-    # Profile operations                                                   #
-    # ------------------------------------------------------------------ #
 
     def create_profile(self, profile: ProfileConfig) -> None:
         """Create the directory structure for a new profile on disk."""
         pass
 
+    def activate_profile(self, profile: ProfileConfig) -> None:
+        """
+        Activates the profile available to the saved disk.
+        Expect : This should also be able to activate the current profile to start the game.
+        Game will load all the stats from it .
+        """
+        pass
+
+    def exit_profile(self):
+        """
+        Exits from the current Profile.
+        Expect : This should confirm & initiate the exit , also saving the game with the last_initiated game config
+        to latest_save_point & create backup on last saved config
+        """
+        pass
+
+
     def remove_profile(self, profile: ProfileConfig) -> None:
         """Permanently delete a profile's directory from disk."""
-        profile_path = self.dir.get_profile_path(profile.name)
+        profile_path = self.dir_obj.get_profile_path(profile.name)
         if profile_path.is_dir():
             shutil.rmtree(profile_path)
 
