@@ -1,8 +1,8 @@
 import shutil
 from typing import List
 
-from src.ProfileManager.profile_data import ProfileConfig
 from src.ProfileManager.directory import DirectoryManager
+from src.ProfileManager.profile_data import ProfileConfig
 
 
 class ProfileManager:
@@ -14,20 +14,12 @@ class ProfileManager:
     def __init__(self, dir: DirectoryManager) -> None:
         self.dir = dir
 
-    # ------------------------------------------------------------------ #
-    # Disk-backed queries                                                  #
-    # ------------------------------------------------------------------ #
-
-    def get_profile_names_on_disk(self) -> List[str]:
+    def get_profiles(self) -> List[str]:
         """Return profile names that actually exist as folders on disk."""
         profiles_dir = self.dir.profiles_dir
         if not profiles_dir.exists():
             return []
         return [p.name for p in profiles_dir.iterdir() if p.is_dir()]
-
-    def get_profiles(self) -> List[str]:
-        """Return all profile names currently on disk."""
-        return self.get_profile_names_on_disk()
 
     def profile_exists(self, profile: ProfileConfig) -> bool:
         """Check whether a profile's directory exists on disk."""
@@ -35,7 +27,7 @@ class ProfileManager:
 
     def profile_size(self) -> int:
         """Number of profiles on disk."""
-        return len(self.get_profile_names_on_disk())
+        return len(self.get_profiles())
 
     # ------------------------------------------------------------------ #
     # Profile operations                                                   #
@@ -56,7 +48,7 @@ class ProfileManager:
         Future Based implementation needed for export | Import profiles
         """
         pass
-    
+
     def load_profile(self) -> None:
         """
         Future Based implementation needed for export | Import profiles

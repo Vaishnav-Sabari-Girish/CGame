@@ -1,12 +1,12 @@
 from pathlib import Path
-from platformdirs import PlatformDirs
 
+from platformdirs import PlatformDirs
 
 
 class DirectoryManager:
     """Manages the directory structure for CGAME and user profiles."""
 
-    def __init__(self, app_name : str = "CGAME") -> None:
+    def __init__(self, app_name: str = "CGAME") -> None:
         self.dirs = PlatformDirs(
             appname=app_name,
             appauthor="BITS-Rohit"
@@ -51,4 +51,3 @@ class DirectoryManager:
         self.get_profile_path(profile_name).mkdir(parents=True, exist_ok=True)
         self.get_backup_path(profile_name).mkdir(parents=True, exist_ok=True)
         self.get_save_path(profile_name).mkdir(parents=True, exist_ok=True)
-
