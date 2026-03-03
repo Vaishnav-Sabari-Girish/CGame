@@ -39,8 +39,8 @@ class ProfileManager:
 
         Creates:
             profiles/<name>/
-            profiles/<name>/saves/       ← gamestate.json will live here
-            profiles/<name>/backup/      ← backup copy of gamestate.json
+            profiles/<name>/saves/       ← game_state.json will live here
+            profiles/<name>/backup/      ← backup copy of game_state.json
         """
         self.dir_obj.setup_profile_directories(profile.name)
 
@@ -49,7 +49,7 @@ class ProfileManager:
 
         Expected flow:
             1. Verify profile exists on disk via profile_exists().
-            2. Read game_state_path (saves/gamestate.json) into a GameState object.
+            2. Read game_state_path (saves/game_state.json) into a GameState object.
             3. Mark profile as active (profile.is_active = True).
             4. Hand the GameState off to the game engine to begin the session.
         """
@@ -59,8 +59,8 @@ class ProfileManager:
         """Save the current game state and exit the active profile cleanly.
 
         Expected flow:
-            1. Serialize current GameState → write to game_state_path (saves/gamestate.json).
-            2. Copy saves/gamestate.json → backup/gamestate.json (via create_backup).
+            1. Serialize current GameState → write to game_state_path (saves/game_state.json).
+            2. Copy saves/game_state.json → backup/game_state.json (via create_backup).
             3. Update profile.lastModifiedAt timestamp.
             4. Mark profile as inactive (profile.is_active = False).
         """

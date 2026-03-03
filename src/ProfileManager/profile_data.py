@@ -19,13 +19,13 @@ class ProfileConfig:
     is_active: bool
 
     # Folder paths
-    profile_path: Path          # profiles/<name>/
-    backup_path: Path           # profiles/<name>/backup/
-    save_path: Path             # profiles/<name>/saves/
+    profile_path: Path  # profiles/<name>/
+    backup_path: Path  # profiles/<name>/backup/
+    saves_dir: Path  # profiles/<name>/saves/
 
-    # GameState file paths
-    game_state_path: Path       # profiles/<name>/saves/gamestate.json
-    backup_game_state_path: Path  # profiles/<name>/backup/gamestate.json
+    # GameState file paths (JSON)
+    game_state_path: Path  # profiles/<name>/saves/game_state.json
+    backup_game_state_path: Path  # profiles/<name>/backup/game_state.json
 
     @classmethod
     def from_dict(cls, data: Dict[str, Union[str, int, Path, bool]]) -> ProfileConfig:
@@ -38,7 +38,7 @@ class ProfileConfig:
             is_active=data["is_active"],
             profile_path=Path(data["profile_path"]),
             backup_path=Path(data["backup_path"]),
-            save_path=Path(data["save_path"]),
+            saves_dir=Path(data["saves_dir"]),
             game_state_path=Path(data["game_state_path"]),
             backup_game_state_path=Path(data["backup_game_state_path"]),
         )

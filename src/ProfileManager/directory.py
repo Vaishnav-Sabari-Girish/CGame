@@ -11,9 +11,9 @@ class DirectoryManager:
         └── profiles/
             └── <profile_name>/
                 ├── saves/
-                │   └── gamestate.json
+                │   └── game_state.json
                 └── backup/
-                    └── gamestate.json
+                    └── game_state.json
     """
 
     def __init__(self, app_name: str = "CGAME") -> None:
@@ -46,7 +46,7 @@ class DirectoryManager:
         """backup/ folder inside the given profile's directory."""
         return self.get_profile_path(profile_name) / "backup"
 
-    def get_save_path(self, profile_name: str) -> Path:
+    def get_saves_dir(self, profile_name: str) -> Path:
         """saves/ folder inside the given profile's directory."""
         return self.get_profile_path(profile_name) / "saves"
 
@@ -57,18 +57,18 @@ class DirectoryManager:
     def get_game_state_path(self, profile_name: str) -> Path:
         """Path to the active game state JSON file for a profile.
 
-        Location: saves/gamestate.json
+        Location: saves/game_state.json
         This is the file that gets loaded when a user activates a profile.
         """
-        return self.get_save_path(profile_name) / "gamestate.json"
+        return self.get_saves_dir(profile_name) / "game_state.json"
 
     def get_backup_game_state_path(self, profile_name: str) -> Path:
         """Path to the backup copy of the game state JSON for a profile.
 
-        Location: backup/gamestate.json
+        Location: backup/game_state.json
         Written on exit_profile() before the session ends.
         """
-        return self.get_backup_path(profile_name) / "gamestate.json"
+        return self.get_backup_path(profile_name) / "game_state.json"
 
     # ------------------------------------------------------------------ #
     # Directory bootstrap                                                  #
@@ -81,11 +81,11 @@ class DirectoryManager:
             root_dir/
             └── profiles/
                 └── <profile_name>/
-                    ├── saves/       ← gamestate.json lives here
-                    └── backup/      ← backup copy of gamestate.json lives here
+                    ├── saves/       ← game_state.json lives here
+                    └── backup/      ← backup copy of game_state.json lives here
         """
         self.setup_base_directories()
 
         self.get_profile_path(profile_name).mkdir(parents=True, exist_ok=True)
         self.get_backup_path(profile_name).mkdir(parents=True, exist_ok=True)
-        self.get_save_path(profile_name).mkdir(parents=True, exist_ok=True)
+        self.get_saves_dir(profile_name).mkdir(parents=True, exist_ok=True)
