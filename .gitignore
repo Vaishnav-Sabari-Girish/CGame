@@ -26,14 +26,12 @@ dist/
 cliff.toml
 changelog.sh
 
-<<<<<<< HEAD
-# KDL file for state
+# files for state
 *.kdl
+save.json
 
 # Asciinema stuff 
 *.cast
 *.gif
-=======
 .jbeval
 .qodo
->>>>>>> 592c7a6f8832067c5a92c67b64884e2f9390490a
